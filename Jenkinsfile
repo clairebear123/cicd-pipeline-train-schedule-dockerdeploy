@@ -21,5 +21,17 @@ pipeline {
                 }
             }
         }
+        stage('Push Docker IMage') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('http://registry.hub.docker.com','docker_hub_login')
+                    docker.push('${env.BUILD_NUMBER}')
+                    docker.push('latest')
+                }
+            }
+        }
     }
 }
