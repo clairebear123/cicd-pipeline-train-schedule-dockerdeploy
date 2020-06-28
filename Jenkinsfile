@@ -15,7 +15,7 @@ pipeline {
             steps {
                 app = docker.build('clairebear/train-schedule')
                 app.inside {
-                    echo $(curl http://localhost:8080)
+                    sh 'echo $(curl http://localhost:8080)'
                 }
             }
         }
