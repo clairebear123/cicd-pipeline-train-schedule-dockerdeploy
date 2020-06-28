@@ -8,5 +8,16 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
+        stage('Build Docker IMage') {
+            when {
+                branch 'master'
+            }
+            steps {
+                app = docker.build('clairebear/train-schedule')
+                app.inside {
+                    echo $(curl http://localhost:8080)
+                }
+            }
+        }
     }
 }
